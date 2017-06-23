@@ -1,0 +1,129 @@
+﻿<!-- BEGIN PAGE CONTENT-->
+<!--
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+        Data details
+    </h4>
+</div>
+-->
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light bg-inverse">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-equalizer font-red-sunglo"></i>
+						<span class="caption-subject font-red-sunglo bold uppercase">{{action}}</span>
+					</div>
+					<div class="actions">
+						<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+							<i class="fa fa-reply" data-dismiss="modal"></i>
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body form">
+										<!-- BEGIN FORM-->
+					<form action="" id="menu_info" method="POST" class="form-horizontal form-horizontal form-bordered form-label-stripped">
+						{% csrf_token %}
+						<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">菜单名称</label>
+								<div class="col-md-4">
+									<div class="input-icon right">
+										<i class="fa fa-microphone"></i>
+										<input name="id" type="hidden" value="{{menu.id}}"></input>
+										<input type="text" class="form-control" name="title" placeholder="Right icon" value="{{menu.title}}">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">菜单链接</label>
+								<div class="col-md-4">
+									<div class="input-icon">
+										<i class="fa fa-bell-o"></i>
+										<input type="text" class="form-control" name="href" placeholder="Left icon" value="{{menu.href}}">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">所属菜单</label>
+								<div class="col-md-4">
+									<select class="form-control" name="fatherid">
+									{% if menu.fatherid == 0 %}
+									<option selected="selected"  value="{{menu.fatherid}}">/</option>
+									{%else%}
+									<option value="{{menu.fatherid}}">/</option>
+									{% endif %}
+									{%for f in fathermenu%}
+										{%if f.id == menu.fatherid%}
+										<option selected="selected"  value="{{f.id}}">{{f.title}}</option>
+										{%else%}
+										<option value="{{f.id}}">{{f.title}}</option>
+										{% endif %}
+									{%endfor%}
+									</select>
+									<span class="help-block">目前只支持2级目录，/表示根目录</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label">优先级</label>
+								<div class="col-md-4">
+									<div class="input-icon right">
+										<i class="fa fa-microphone"></i>
+										<input type="text" name="pri" class="form-control" placeholder="优先级越高，菜单排列越考前" value="{{menu.pri}}">
+									</div>
+								</div>
+							</div>
+								
+						</div>
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-offset-3 col-md-4">
+									<button type="button" class="btn green button-submit">Submit</button>
+									<button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				<!-- END FORM-->
+				</div>
+			</div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="../../assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>      
+<script src="../../assets/admin/pages/scripts/myform-wizard.js"></script> 
+<!-- END PAGE LEVEL STYLES -->
+ 
+ <script>
+    jQuery(document).ready(function() {   
+        FormWizard.init();
+        $('.button-submit').click(function(e) {
+             $.ajax({
+				type:"POST",
+				url :"/settings/menu/edit/",
+				data:$("#menu_info").serialize(),
+				success: function (rsp) {
+					alert(rsp.hint);
+					$("#menuModal").hide();
+					if (rsp.code == 1){
+						$(".page-content").load("/settings/menu/list", function() {
+							Layout.fixContentHeight(); // fix content height
+							Metronic.initAjax(); // initialize core stuff
+							alert('2');
+						});
+					}                                       
+				}
+             });
+        });
+	$.ajaxSetup({cache: false});
+});      
+</script> 
+    <!-- END JAVASCRIPTS -->

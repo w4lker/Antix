@@ -1,0 +1,97 @@
+<!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-green-haze">
+                        <span class="caption-subject bold uppercase">Horizontal Form</span>
+                    </div>
+                    <div class="actions">
+                    <a class="btn btn-circle btn-icon-only blue" href="javascript:;"></a> 
+                    <a class="btn btn-circle btn-icon-only green" href="javascript:;"></a> 
+                    <a class="btn btn-circle btn-icon-only red" href="javascript:;"></a> 
+                    <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title=""
+                    title=""></a></div>
+                </div>
+                <div class="portlet-body form">
+                    <form role="form" class="form-horizontal" id="submit_form" action="" method="POST">
+						{% csrf_token %}
+                        <div class="form-wizard">
+                            <div class="form-body">
+								<div class="alert alert-danger display-none">You have some form errors. Please check below.</div>
+								<div class="alert alert-success display-none">Your form validation is successful!</div>
+                                <div class="form-group form-md-line-input">
+                                    <label class="control-label col-md-2">Username</label>
+                                    <div class="col-md-10">
+                                        <div class="form-control form-control-static">{{username}}</div>
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input has_success">
+                                    <label class="col-md-2 control-label" for="form_control_1">Password</label>
+                                    <div class="col-md-10">
+										<input type="password" class="form-control" name="pass" placeholder="Enter your password" />
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+								<div class="form-group form-md-line-input">
+                                    <label class="col-md-2 control-label" for="form_control_1">New Password</label>
+                                    <div class="col-md-10">
+										<input type="password" class="form-control" name="new_pass" id="new_pass" placeholder="Enter your new password" />
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+								<div class="form-group form-md-line-input">
+                                    <label class="col-md-2 control-label" for="form_control_1">Confirm Password</label>
+                                    <div class="col-md-10">
+										<input type="password" class="form-control" name="re_pass" placeholder="Confirm your new password" />
+                                        <div class="form-control-focus"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+										<button type="button" class="btn default ajaxify goback" href="/user/profile">Cancel</button> 
+										<button type="button" class="btn blue button-submit">Submit</button>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+    <!-- END PAGE CONTENT-->
+    <script type="text/javascript" src="../../assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script> 
+    <!-- END PAGE LEVEL PLUGINS -->
+     
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+     
+    <script src="../../assets/admin/pages/scripts/myform-wizard.js"></script> 
+    <!-- END PAGE LEVEL STYLES -->
+     
+    <script>
+		jQuery(document).ready(function() {   
+		   // initiate layout and plugins
+			FormWizard.init();
+			$('.button-submit').click(function(e) {
+				$.ajax({
+					type:"POST",
+					url :"/user/edit",
+					data:$("#submit_form").serialize(),
+					success: function (response) {
+                        alert(response.hint);
+						if (response.code == 1){
+							$('.ajaxify.goback').click();
+						}
+						
+                    }
+				});
+			});
+		});
+	</script> 
+    <!-- END JAVASCRIPTS -->

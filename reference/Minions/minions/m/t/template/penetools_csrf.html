@@ -1,0 +1,322 @@
+﻿{%include 'minions/template/header.html'%}
+
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+        <div class="col-md-12">
+                <div class="form-horizontal form-row-seperated" action="#">
+                        <div class="portlet">
+                                <div class="portlet-title">
+                                        <div class="caption">
+                                                <i class="fa fa-shopping-cart"></i>CSRF测试
+                                        </div>
+                                                                <!--
+                                                                <div class="actions btn-set">
+                                                                        <button type="button" name="back" class="btn default"><i class="fa fa-angle-left"></i> Back</button>
+                                                                        <button class="btn default"><i class="fa fa-reply"></i> Reset</button>
+                                                                        <button class="btn green"><i class="fa fa-check"></i> Save</button>
+                                                                        <button class="btn green"><i class="fa fa-check-circle"></i> Save &amp; Continue Edit</button>
+                                                                        <div class="btn-group">
+                                                                                <a class="btn yellow dropdown-toggle" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                                                <i class="fa fa-share"></i> More <i class="fa fa-angle-down"></i>
+                                                                                </a>
+                                                                                <ul class="dropdown-menu pull-right">
+                                                                                        <li>
+                                                                                                <a href="javascript:;">
+                                                                                                Duplicate </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                                <a href="javascript:;">
+                                                                                                Delete </a>
+                                                                                        </li>
+                                                                                        <li class="divider">
+                                                                                        </li>
+                                                                                        <li>
+                                                                                                <a href="javascript:;">
+                                                                                                Print </a>
+                                                                                        </li>
+                                                                                </ul>
+                                                                        </div>
+                                                                </div>
+                                                                -->
+                                </div>
+                                <div class="portlet-body">
+                                        <div class="tabbable">
+                                                <ul class="nav nav-tabs">
+                                                        <li class="active">
+                                                                <a href="#tab_proxy" data-toggle="tab">
+                                                                        TX CSRF测试</a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="#tab_sqli" data-toggle="tab">
+                                                                        SQL注入模块 </a>
+                                                        </li>
+                                                        <li>
+                                                                <a href="#tab_xss" data-toggle="tab">
+                                                                        XSS模块 </a>
+                                                        </li>
+                                                                                <!--
+                                                                                <li>
+                                                                                        <a href="#tab_reviews" data-toggle="tab">
+                                                                                        Reviews <span class="badge badge-success">
+                                                                                        3 </span>
+                                                                                        </a>
+                                                                                </li>
+                                                                                -->
+                                                </ul>
+                                                <div class="tab-content no-space form">
+                                                                                <div class="tab-pane active form" id="tab_proxy">
+                                                                                        <form action="" method="post" id="proxy_settings" class="form-horizontal">
+                                                                                                {% csrf_token %}
+                                                                                                <div class="form-body">
+                                                                                                        <input name="module" type="hidden" value="proxy"></input>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">参数名：<span class="required">
+                                                                                                                * </span></label>
+                                                                                                                <div class="col-md-2">
+                                                                                                                              
+                                                                                                                                        <input type="text" class="form-control">
+                                                                                                                 
+                                                                                                                        </div>
+                                                                                                                        
+                                                                                                        
+                                                                                                                <label class="col-md-1 control-label">参数值: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-4">
+                                                                                                                        <input class="form-control" type="text" name="port" placeholder="8088" value="{{settings.port}}"></input>
+                                                                                                                        
+                                                                                                                </div>
+                                                                                                                <div class="col-md-2">
+                                                                                                                <a href="#" class="bt blue"><i class="fa fa-plus"></i> Add Item</a>
+                                                                                                                        <i class="fa fa-plus"></i>
+                                                                                                                        
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">上游代理: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-3 icheck-inline">
+                                                                                                                        <label>
+                                                                                                                                {%ifequal settings.upstream_enabled 'true'%}
+                                                                                                                                <input class="form-control" type="checkbox"  checked></input>
+                                                                                                                                <input class="form-control" type="hidden" name="upstream_enabled" value="true"></input>
+                                                                                                                                {%else%}
+                                                                                                                                <input class="form-control" type="checkbox"></input>
+                                                                                                                                <input class="form-control" type="hidden" name="upstream_enabled" value="false"></input>
+                                                                                                                                {%endifequal%}
+                                                                                                                                启用上游代理功能
+                                                                                                                        </label>
+                                                                                                                        <span class="help-block">
+                                                                                                                        内网通过代理上网时，可使用上游代理功能 </span>
+                                                                                                                </div>
+                                                                                                                <div class="col-md-3">
+                                                                                                                        {%ifequal settings.upstream_enabled 'true'%}
+                                                                                                                        <input class="form-control" type="text" name="upstream_proxy" placeholder="a.com.cn:8080" value="{{settings.upstream_proxy}}"></input>
+                                                                                                                        {%else%}
+                                                                                                                        <input class="form-control" type="text" name="upstream_proxy" disabled="true" placeholder="a.com.cn:8080" value="{{settings.upstream_proxy}}"></input>
+                                                                                                                        {%endifequal%}
+                                                                                                                </div>
+                                                                                                                
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">忽略文件类型: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                        <input class="form-control" type="text" name="negative_type" placeholder="jpg|gif|png|js" value="{{settings.negative_type}}"></input>
+                                                                                                                        <span class="help-block">
+                                                                                                                        若代理访问以上(静态)文件类型将不进行扫描，使用(|)间隔 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">目标主机: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                        <textarea class="form-control" name="target" placeholder="a.com;b.com;c.com">{{settings.target}}</textarea>
+                                                                                                                        <span class="help-block">
+                                                                                                                        设置后代理仅对名单中的主机或域名进行漏洞扫描，使用(;)间隔 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-actions">
+                                                                                                                <div class="row">
+                                                                                                                        <div class="col-md-offset-3 col-md-4">
+                                                                                                                                <button type="button" class="btn green button-submit" data-type="proxy">Save changes</button>
+                                                                                                                        </div>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                        </form>
+                                                                                </div>
+                                                                                <div class="tab-pane form" id="tab_sqli">
+                                                                                        <form action="" method="POST" id="sqlmap_settings" class="form-horizontal form-horizontal form-bordered form-label-stripped">
+                                                                                                {% csrf_token %}
+                                                                                                <div class="form-body">
+                                                                                                        <input name="module" type="hidden" value="sqlmap"></input>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">模块开关: <span class="required">
+                                                                                                                * </span></label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                        <div class="input-group">
+                                                                                                                                <div class="icheck-inline">
+                                                                                                                                        <label>
+                                                                                                                                        <input type="radio" name="sqlmap_enabled" checked class="icheck" value="true"> 启用 </label>
+                                                                                                                                        <label>
+                                                                                                                                        {%ifequal settings.sqlmap_enabled "false"%}
+                                                                                                                                        <input type="radio" name="sqlmap_enabled" checked class="icheck" value="false"> 关闭 </label>
+                                                                                                                                        {%else%}
+                                                                                                                                        <input type="radio" name="sqlmap_enabled" class="icheck" value="false"> 关闭 </label>
+                                                                                                                                        {%endifequal%}
+                                                                                                                                </div>
+                                                                                                                        </div>
+                                                                                                                        <span class="help-block">
+                                                                                                                        关闭后将停止SQL注入漏洞扫描 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">sqlmap server: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-3">
+                                                                                                                        <input class="form-control" type="text" name="server" placeholder="http://1.1.1.1:8775" value="{{settings.server}}"></input>
+                                                                                                                        <span class="help-block">
+                                                                                                                        可设置远程sqlmapapi server地址 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">level: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-3">
+                                                                                                                        <input class="form-control" type="text" name="level" placeholder="1" value="{{settings.level}}"></input>
+                                                                                                                        <span class="help-block">
+                                                                                                                        为空则默认level 1 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">risk: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-3">
+                                                                                                                        <input class="form-control" type="text" name="risk" placeholder="1" value="{{settings.risk}}"></input>
+                                                                                                                        <span class="help-block">
+                                                                                                                        为空则默认risk 1 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-actions">
+                                                                                                                <div class="row">
+                                                                                                                        <div class="col-md-offset-3 col-md-4">
+                                                                                                                                <input name="type" type="hidden" value="sqlmap"></input>
+                                                                                                                                <button type="button" class="btn green button-submit" data-type="sqlmap">Save changes</button>
+                                                                                                                        </div>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                        </form>
+                                                                                </div>
+                                                                                <div class="tab-pane" id="tab_xss">
+                                                                                        <form id="xss_settings" class="form-horizontal form-horizontal form-bordered form-label-stripped">
+                                                                                                {% csrf_token %}
+                                                                                                <div class="form-body">
+                                                                                                        <input name="module" type="hidden" value="xss"></input>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">模块开关: <span class="required">
+                                                                                                                * </span></label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                        <div class="input-group">
+                                                                                                                                <div class="icheck-inline">
+                                                                                                                                        <label>
+                                                                                                                                        <input type="radio" name="xss_enabled" checked class="icheck" value="true"> 启用 </label>
+                                                                                                                                        <label>
+                                                                                                                                        {%ifequal settings.xss_enabled "false"%}
+                                                                                                                                        <input type="radio" name="xss_enabled" checked class="icheck" value="false"> 关闭 </label>
+                                                                                                                                        {%else%}
+                                                                                                                                        <input type="radio" name="xss_enabled" class="icheck" value="false"> 关闭 </label>
+                                                                                                                                        {%endifequal%}
+                                                                                                                                </div>
+                                                                                                                        </div>
+                                                                                                                        <span class="help-block">
+                                                                                                                        关闭后将停止XSS漏洞扫描 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">Heuristic: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                        <input class="form-control" type="text" name="heuristic" placeholder="&lt;,&gt;,',&quot;" value="{{settings.heuristic}}"></input>
+                                                                                                                        <span class="help-block">
+                                                                                                                        启发式XSS扫描测试，测试未过滤的字符，使用(,)间隔 </span>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="form-group">
+                                                                                                                <label class="col-md-2 control-label">payloads: <span class="required">
+                                                                                                                * </span>
+                                                                                                                </label>
+                                                                                                                <div class="col-md-10">
+                                                                                                                        <textarea class="form-control" name="payloads" placeholder="&lt;img src=1 onerror=alert(1)&gt;;&lt;script&gt;alert(1)&lt;/script&gt;" value="{{settings.payloads}}">{{settings.payloads}}</textarea>
+                                                                                                                        <span class="help-block">
+                                                                                                                        设置XSS漏洞扫描所使用的测试payload，使用(;)间隔 </span>
+                                                                                                                </div>
+                                                                                                        </div>	
+                                                                                                </div>
+                                                                                                <div class="form-actions">
+                                                                                                        <div class="row">
+                                                                                                                <div class="col-md-offset-3 col-md-4">
+                                                                                                                        <button type="button" class="btn green button-submit" data-type="xss">Save changes</button>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                        </form>		
+                                                                                </div>
+                                                                        </div>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</div>
+
+<!-- GEGAN JAVASCRIPTS -->
+ <script>
+    jQuery(document).ready(function() { 
+                $("input:checkbox").click(function(){
+                        if($(this).is(':checked')==true){
+                                $("input[name='upstream_enabled']").attr('value','true');
+                                $("input[name='upstream_proxy']").attr('disabled',false)
+                        }
+                        else{
+                                $("input[name='upstream_enabled']").attr('value','false');
+                                $("input[name='upstream_proxy']").attr('disabled',true)
+                        }
+                });
+        $('.button-submit').click(function(e) {
+                        var t = $(this).data('type');
+                        if(t =='proxy'){
+                                var d = $("#proxy_settings").serialize();
+                        }
+                        else if(t=='sqlmap'){
+                                var d = $('#sqlmap_settings').serialize();
+                        }
+                        else{
+                                var d = $('#xss_settings').serialize();
+                        }
+            $.ajax({
+                                type:"POST",
+                                url :"/settings/modules/edit",
+                                data:d,
+                                success: function (rsp) {
+                                        alert(rsp.hint);
+                                        //if (rsp.code == 1){
+                                        //	$(".page-content").load("/settings/menu/list", function() {
+                                        //		Layout.fixContentHeight(); // fix content height
+                                        //		Metronic.initAjax(); // initialize core stuff
+                                                //});
+                                        //}                                       
+                                }
+             });
+        });
+});      
+</script> 
+<!-- END JAVASCRIPTS -->

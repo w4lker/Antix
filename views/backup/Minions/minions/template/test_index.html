@@ -1,0 +1,263 @@
+﻿<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE HEADER-->
+			{%include 'minions/template/header.html'%}
+			<!-- END PAGE HEADER-->
+			<!-- BEGIN DASHBOARD STATS -->
+			<div class="row">
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat blue-madison">
+						<div class="visual">
+							<i class="fa fa-comments"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 {{sysinfo.sqli}}
+							</div>
+							<div class="desc">
+								 SQL注入
+							</div>
+						</div>
+						<a class="more ajaxify" href="/vul/sqli/list">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat red-intense">
+						<div class="visual">
+							<i class="fa fa-bar-chart-o"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 {{sysinfo.xss}}
+							</div>
+							<div class="desc">
+								 XSS
+							</div>
+						</div>
+						<a class="more ajaxify" href="/vul/xss/list">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat green-haze">
+						<div class="visual">
+							<i class="fa fa-shopping-cart"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 {{sysinfo.enumeration}}
+							</div>
+							<div class="desc">
+								 路径扫描
+							</div>
+						</div>
+						<a class="more ajaxify" href="javascript:;">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat purple-plum">
+						<div class="visual">
+							<i class="fa fa-globe"></i>
+						</div>
+						<div class="details">
+							<div class="number">
+								 {{sysinfo.fingerprint}}
+							</div>
+							<div class="desc">
+								 指纹识别
+							</div>
+						</div>
+						<a class="more" class="ajaxify" href="javascript:;">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- END DASHBOARD STATS -->
+			<div class="clearfix">
+			<div class="row">
+				<div class="col-md-12 col-sm-6">
+					<div class="portlet light bordered">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="icon-cursor font-purple-intense"></i>
+								<span class="caption-subject font-purple-intense ">General SysInfo</span>
+							</div>
+							<div class="actions">
+								<a href="javascript:;" class="btn btn-sm btn-circle btn-default easy-pie-chart-reload">
+								<i class="fa fa-repeat"></i> Reload </a>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="easy-pie-chart">
+										<div class="number transactions" data-percent="{{sysinfo.cpu}}">
+											<span>
+											{{sysinfo.cpu}} </span>
+											%
+										</div>
+										<a class="title" href="javascript:;">
+										CPU使用率 <i class="icon-arrow-right"></i>
+										</a>
+									</div>
+								</div>
+								<div class="margin-bottom-10 visible-sm">
+								</div>
+								<div class="col-md-4">
+									<div class="easy-pie-chart">
+										<div class="number visits" data-percent="{{sysinfo.memory}}">
+											<span>
+											{{sysinfo.memory}} </span>
+											%
+										</div>
+										<a class="title" href="javascript:;">
+										内存占用率 <i class="icon-arrow-right"></i>
+										</a>
+									</div>
+								</div>
+								<div class="margin-bottom-10 visible-sm">
+								</div>
+								<div class="col-md-4">
+									<div class="easy-pie-chart">
+										<div class="number bounce" data-percent="{{sysinfo.disk}}">
+											<span>
+											{{sysinfo.disk}} </span>
+											%
+										</div>
+										<a class="title" href="javascript:;">
+										硬盘使用率 <i class="icon-arrow-right"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix">
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<!-- BEGIN PORTLET-->
+					<div class="portlet light bordered">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="icon-bubble font-red-sunglo"></i>
+								<span class="caption-subject font-red-sunglo ">开发日志</span>
+							</div>
+							<div class="actions">
+								<div class="portlet-input input-inline">
+									<div class="input-icon right">
+										<i class="icon-magnifier"></i>
+										<input type="text" class="form-control input-circle" placeholder="search...">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
+								<ul class="chats">
+								{%for log in logs%}
+									{%if log.id|divisibleby:"2" %}
+									<li class="out">
+										<img class="avatar" alt="" src="../../assets/admin/layout/img/m2.jpg"/>
+										<div class="message">
+												<span class="arrow">
+												</span>
+												<span class="datetime">
+												{{log.date|date:"Y/m/d"}} </span>
+												<span class="body">
+												{{log.items}} </span>
+										</div>
+									</li>
+									{%else%}
+									<li class="in">
+										<img class="avatar" alt="" src="../../assets/admin/layout/img/m1.jpg"/>
+										<div class="message">
+											<span class="arrow">
+											</span>
+											<span class="datetime">
+											{{log.date|date:"Y/m/d"}} </span>
+											<span class="body">
+											{{log.items}} </span>
+										</div>
+									</li>
+									{%endif%}
+								{%endfor%}
+								</ul>
+							</div>
+							<div class="chat-form">
+								<form id="devlogs">
+								{% csrf_token %}
+									<div class="input-cont">
+										<input class="form-control" name="logs" type="text" value="" placeholder="Type a message here..."/>
+									</div>
+									<div class="btn-cont">
+										<span class="arrow">
+										</span>
+										<a id="addlogs" class="btn blue icn-only">
+										<i class="fa fa-check icon-white"></i>
+										</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- END PORTLET-->
+				</div>
+			</div>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+
+<script src="../../assets/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+<script src="../../assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<script>
+jQuery(document).ready(function() {    
+   Demo.init(); // init demo features
+   Index.init();   
+   Index.initDashboardDaterange();
+   Index.initJQVMAP(); // init index page's custom scripts
+   Index.initCalendar(); // init index page's custom scripts
+   Index.initCharts(); // init index page's custom scripts
+   Index.initChat();
+   Index.initMiniCharts();
+   Tasks.initDashboardWidget();
+   $("#addlogs").click(function(){
+		if($("ul.chats li").first().hasClass('in') == true)
+			var c = 'out';
+		else
+			var c = 'in'
+		$.ajax({
+				type:"POST",
+				url :"/logs/developer/add",
+				data:$('#devlogs').serialize(),
+				success: function (rsp) {
+					var d = new Date();
+					var addDate = d.toLocaleDateString();
+					$('.chats').prepend("<li class="+ c +"><img class='avatar' alt='' src='../../assets/admin/layout/img/m2.jpg'/><div class='message'><span class='arrow'></span><span class='datetime'>"+ addDate +" </span><span class='body'>"+$("input[name='logs']").val()+ "</span></div></li>");nu
+					$('.chats').prepend("<li class="+ c +"><img class='avatar' alt='' src='../../assets/admin/layout/img/m2.jpg'/><div class='message'><span class='arrow'></span><span class='datetime'>"+ addDate +" </span><span class='body'>"+$("input[name='logs']").val()+ "</span></div></li>");
+                                  
+				}
+        });
+	});
+	setInterval("$('.easy-pie-chart-reload').click()",5000);
+});
+</script>
+		

@@ -1,0 +1,92 @@
+<!-- BEGIN PAGE CONTENT-->
+        <div class="row" id="menu_page">
+            <div class="col-md-12">
+                <!-- BEGIN VALIDATION STATES-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">menu list</div>
+                        <div class="actions">
+                        <a class="btn btn-circle btn-icon-only blue" href="javascript:;"></a> 
+                        <a class="btn btn-circle btn-icon-only green" href="javascript:;"></a> 
+						<a href="#" data-url="/menu/list" class="btn btn-circle btn-sm green reload"><i class="fa fa-refresh"></i>Reflesh</a>
+						<a data-toggle="modal" data-target="#menuModal" href="/menu/add" class="btn btn-circle red-sunglo btn-sm" title="Ìí¼ÓÐÂ²Ëµ¥"><i class="fa fa-plus"></i> Add </a>
+                        <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title=""
+                        title=""></a> 
+                        <a href="javascript:;" class="reload" data-original-title="" title=""></a> 
+                        <a href="javascript:;" class="remove" data-original-title="" title=""></a></div>
+                    </div>
+                    <div class="portlet-body">
+                    <!-- BEGIN FORM-->
+                    
+                    <table class="table table-striped table-responsive" id="menu_list">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>title</th>
+                                <th>href</th>
+                                <th>fathername</th>
+                                <th>priority</th>
+                                <th>options</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>title</th>
+                                <th>href</th>
+                                <th>fathername</th>
+                                <th>priority</th>
+                                <th>options</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+						{% for menu in mlist %}
+                            <tr>
+                                <td>{{menu.id}}</td>
+                                <td>{{menu.title}}</td>
+                                <td>{{menu.href}}</td>
+								<td>{{menu.fathername}}</td>
+                                <td>{{menu.pri}}</td>
+								 
+                                <!--<td><a data-toggle="modal" data-target="#myModal" href="data/details/{{data.id}}"></a></td>-->
+                                <td>
+                                    <a data-toggle="modal" data-target="#menuModal" href="/menu/edit/{{menu.id}}" title="±à¼­"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+									<a name="delete" title="É¾³ý" data-id="/menu/del/{{menu.id}}"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+						 {% endfor %}
+                        </tbody>
+                    </table>
+                    <!--start modal-->
+                    <div class="modal fade modal-scroll" id="menuModal" role="basic" aria-hidden="true" data-replace="true">
+                        <div class="modal-dialog" style="width: 1000px;">
+                            <div class="modal-content">
+                                <div class="modal-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- END VALIDATION STATES-->
+            </div>
+        </div>
+        <!-- END VALIDATION STATES-->
+        <!-- END PAGE CONTENT-->
+<script src="../../assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../../assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script>
+jQuery(document).ready(function() {   
+   // initiate layout and plugins
+    $("#menu_list").DataTable();
+	$.ajaxSetup({
+							cache: false
+						});
+	$("a[name='delete']").click(function(){
+		$.get($(this).attr("data-id"), function(rsp){
+			alert(rsp.hint);
+		});
+
+	});	
+			
+});
+</script>
+    </body>
+</html>

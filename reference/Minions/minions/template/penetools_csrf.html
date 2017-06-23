@@ -1,0 +1,288 @@
+﻿<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <title></title>
+  </head>
+  <body>{%include 'minions/template/header.html'%} 
+  <!-- BEGIN PAGE CONTENT-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-horizontal form-row-seperated" action="#">
+        <div class="portlet">
+          <div class="portlet-title">
+            <div class="caption">CSRF测试</div>
+            <!--
+                                                                <div class="actions btn-set">
+                                                                        <button type="button" name="back" class="btn default"><i class="fa fa-angle-left"></i> Back</button>
+                                                                        <button class="btn default"><i class="fa fa-reply"></i> Reset</button>
+                                                                        <button class="btn green"><i class="fa fa-check"></i> Save</button>
+                                                                        <button class="btn green"><i class="fa fa-check-circle"></i> Save &amp; Continue Edit</button>
+                                                                        <div class="btn-group">
+                                                                                <a class="btn yellow dropdown-toggle" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                                                                <i class="fa fa-share"></i> More <i class="fa fa-angle-down"></i>
+                                                                                </a>
+                                                                                <ul class="dropdown-menu pull-right">
+                                                                                        <li>
+                                                                                                <a href="javascript:;">
+                                                                                                Duplicate </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                                <a href="javascript:;">
+                                                                                                Delete </a>
+                                                                                        </li>
+                                                                                        <li class="divider">
+                                                                                        </li>
+                                                                                        <li>
+                                                                                                <a href="javascript:;">
+                                                                                                Print </a>
+                                                                                        </li>
+                                                                                </ul>
+                                                                        </div>
+                                                                </div>
+                                                                -->
+          </div>
+          <div class="portlet-body">
+            <div class="tabbable">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a href="#tab_semicsrftester" data-toggle="tab">Semi-CSRF-Tester</a>
+                </li>
+                <li>
+                  <a href="#tab_proxy" data-toggle="tab">SQL注入模块</a>
+                </li>
+                <li>
+                  <a href="#tab_xss" data-toggle="tab">XSS模块</a>
+                </li>
+                <!--
+		    <li>
+                      <a href="#tab_reviews" data-toggle="tab">
+                        Reviews <span class="badge badge-success">
+                             3 </span>
+                      </a>
+                    </li>
+                -->
+              </ul>
+              <div class="tab-content no-space form">
+		<div class="tab-pane active form" id="tab_semicsrftester">
+		  <form action="" method="post" id="form_semicsrftester" class="form-horizontal form-label-stripped">
+		  {% csrf_token %}
+		  <div class="form-body">
+		    <div class="form-group">
+		      <label class="col-md-2 control-label">数据包原文： 
+		      <span class="required">*</span></label>
+		    </div>
+		    <div class="form-group">
+		      <div class="col-md-10 col-md-offset-1">
+			<textarea class="form-control" name="rawrequest" rows="15" placeholder="直接粘贴http包原文"></textarea> 
+			<span class="help-block"></span>
+		      </div>
+		    </div>
+		    <div class="form-actions">
+		      <div class="row">
+			<div class="col-md-offset-3 col-md-4">
+			<!--<input name="type" type="hidden" value="sqlmap" />--> 
+			<button type="button" class="btn green button-submit" id="semitester">Test</button></div>
+		      </div>
+		    </div>
+		  </div>
+		  </form>
+		</div>
+		
+                <div class="tab-pane " id="tab_proxy">
+                  <form action="" method="post" id="proxy_settings" class="form-horizontal">{% csrf_token %}
+                  <div class="form-body">
+                    <input name="module" type="hidden" value="proxy" />
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">参数名： 
+                      <span class="required">*</span></label>
+                      <div class="col-md-2">
+                        <input type="text" class="form-control" />
+                      </div>
+                      <label class="col-md-1 control-label">参数值: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-4">
+                        <input class="form-control" type="text" name="port" placeholder="8088" value="{{settings.port}}" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="#" class="btn btn-md"> 移除</a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">参数名： 
+                      <span class="required">*</span></label>
+                      <div class="col-md-2">
+                        <input type="text" class="form-control" />
+                      </div>
+                      <label class="col-md-1 control-label">参数值: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-4">
+                        <input class="form-control" type="text" name="port" placeholder="8088" value="{{settings.port}}" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="#" class="btn btn-md"> 移除</a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">参数名： 
+                      <span class="required">*</span></label>
+                      <div class="col-md-2">
+                        <input type="text" class="form-control" />
+                      </div>
+                      <label class="col-md-1 control-label">参数值: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-4">
+                        <input class="form-control" type="text" name="port" placeholder="8088" value="{{settings.port}}" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="#" class="btn btn-md"> 移除</a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">参数名： 
+                      <span class="required">*</span></label>
+                      <div class="col-md-2">
+                        <input type="text" class="form-control" />
+                      </div>
+                      <label class="col-md-1 control-label">参数值: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-4">
+                        <input class="form-control" type="text" name="port" placeholder="8088" value="{{settings.port}}" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="#" class="btn btn-md"> 移除</a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">参数名： 
+                      <span class="required">*</span></label>
+                      <div class="col-md-2">
+                        <input type="text" class="form-control" />
+                      </div>
+                      <label class="col-md-1 control-label">参数值: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-4">
+                        <input class="form-control" type="text" name="port" placeholder="8088" value="{{settings.port}}" />
+                      </div>
+                      <div class="col-md-2">
+                        <a href="#" class="btn btn-md"> 移除</a>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <a href="#" class="btn btn-md col-md-offset-2"> 添加</a>
+                    </div>
+                    <div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-offset-8 col-md-5">
+                          <button type="button" class="btn green button-submit" data-type="proxy">生成测试页面</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+				  </form>
+                </div>
+		<div class="tab-pane" id="tab_xss">
+                  <form id="xss_settings" class="form-horizontal form-horizontal form-bordered form-label-stripped">
+		  {% csrf_token %}
+                  <div class="form-body">
+                    <input name="module" type="hidden" value="xss" />
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">模块开关: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-10">
+                        <div class="input-group">
+                          <div class="icheck-inline">
+                          <label>
+                          <input type="radio" name="xss_enabled" checked="checked" class="icheck" value="true" /> 启用</label> 
+                          <label>{%ifequal settings.xss_enabled "false"%} 
+                          <input type="radio" name="xss_enabled" checked="checked" class="icheck" value="false" /> 关闭</label>
+                          {%else%} 
+                          <input type="radio" name="xss_enabled" class="icheck" value="false" /> 关闭 {%endifequal%}</div>
+                        </div>
+                        <span class="help-block">关闭后将停止XSS漏洞扫描</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">Heuristic: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-10">
+                      <input class="form-control" type="text" name="heuristic" placeholder="&lt;,&gt;,',&quot;"
+                      value="{{settings.heuristic}}" /> 
+                      <span class="help-block">启发式XSS扫描测试，测试未过滤的字符，使用(,)间隔</span></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">payloads: 
+                      <span class="required">*</span></label>
+                      <div class="col-md-10">
+                      <textarea class="form-control" name="payloads"
+                      placeholder="&lt;img src=1 onerror=alert(1)&gt;;&lt;script&gt;alert(1)&lt;/script&gt;"
+                      value="{{settings.payloads}}">{{settings.payloads}}</textarea> 
+                      <span class="help-block">设置XSS漏洞扫描所使用的测试payload，使用(;)间隔</span></div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-offset-3 col-md-4">
+                        <button type="button" class="btn green button-submit" data-type="xss">Save changes</button>
+                      </div>
+                    </div>
+                  </div></form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- GEGAN JAVASCRIPTS -->
+  <script>
+    jQuery(document).ready(function() { 
+	$.ajaxSetup({
+	  data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+	});
+		$('#semitester').click(function(e){
+		    //var d = $('#rawhttp').val();
+		    var d = $('#form_semicsrftester').serialize();
+		    alert(d);
+		    $.ajax({
+		      type:"POST",
+		      url:"/penetools/csrf/semitester",
+		      data:d,
+		      success:function(rsp){
+			alert('Testing!'); 
+		      }
+		    });
+		});
+/*        $('.button-submit').click(function(e) {
+                        var t = $(this).data('type');
+                        if(t =='proxy'){
+                                var d = $("#proxy_settings").serialize();
+                        }
+                        else if(t=='sqlmap'){
+                                var d = $('#sqlmap_settings').serialize();
+                        }
+                        else{
+                                var d = $('#xss_settings').serialize();
+                        }
+            $.ajax({
+                                type:"POST",
+                                url :"/settings/modules/edit",
+                                data:d,
+                                success: function (rsp) {
+                                        alert(rsp.hint);
+                                        //if (rsp.code == 1){
+                                        //      $(".page-content").load("/settings/menu/list", function() {
+                                        //              Layout.fixContentHeight(); // fix content height
+                                        //              Metronic.initAjax(); // initialize core stuff
+                                                //});
+                                        //}                                       
+                                }
+             });
+        });*/
+});      
+</script> 
+  <!-- END JAVASCRIPTS -->
+  </body>
+</html>

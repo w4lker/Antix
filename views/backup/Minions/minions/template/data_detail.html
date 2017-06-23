@@ -1,0 +1,47 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+        Data details
+    </h4>
+</div>
+
+<div class="modal-body">
+	<div class="row">
+		<div class="col-md-12">
+
+			{% csrf_token %} 
+			<h4 class="modal-title">Request</h4>
+			<p>
+				<textarea class=" form-control" rows="15" name="request" id="request">{{request}}</textarea>
+				
+			</p>
+				<h4 class="col-md-1">Response</h4>
+				<button type="button" class="btn blue col-md-1 col-md-offset-10" id="replay" name="replay">Replay</button>
+			
+
+				<textarea class="form-control" rows="25" name="response" id="response">{{response}}</textarea>
+
+		</div>
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button type="button" class="btn default" data-dismiss="modal">Close</button>
+</div>
+<script>
+
+jQuery(document).ready(function() {   
+	$("#replay").click(function(){
+		$('#replay').attr('disabled',"true");
+		$('#replay').text('Waiting');
+		var request = $("#request").val();
+		$.post("/data/replay",{'request':request},function(response){
+				$("#response").text(response.response);
+				$('#replay').text('Replay');
+				$('#replay').removeAttr('disabled');
+			});
+	});
+});
+</script>
+		

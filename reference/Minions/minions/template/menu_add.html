@@ -1,0 +1,142 @@
+﻿<!-- BEGIN PAGE CONTENT-->
+<!--
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
+    </button>
+    <h4 class="modal-title" id="myModalLabel">
+        Data details
+    </h4>
+</div>
+-->
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light bg-inverse">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-equalizer font-red-sunglo"></i>
+						<span class="caption-subject font-red-sunglo bold uppercase">{{action}}</span>
+					</div>
+					<div class="actions">
+						<a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
+							<i class="fa fa-reply" data-dismiss="modal"></i>
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body form">
+										<!-- BEGIN FORM-->
+					<form action="" id="menu_add" method="POST" class="form-horizontal form-horizontal form-bordered form-label-stripped">
+						{% csrf_token %}
+						<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">菜单名称</label>
+								<div class="col-md-4">
+									<div class="input-icon right">
+										<i class="fa fa-microphone"></i>
+										<input type="text" class="form-control" name="title" placeholder="尽量简短且与已存在菜单名不重复" value="{{menu.title}}">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-md-3 control-label">所属菜单</label>
+								<div class="col-md-4">
+									<select class="form-control" id="fatherid" name="fatherid">
+									<option selected="selected"  value="0">/</option>
+									{%for f in fathermenu%}
+										<option value="{{f.id}}">{{f.title}}</option>
+									{%endfor%}
+									</select>
+									<span class="help-block">目前只支持2级目录，/表示根目录</span>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-md-3 control-label">菜单链接</label>
+								<div class="col-md-4">
+									<div class="input-icon">
+										<i class="fa fa-bell-o"></i>
+										<input type="text" class="form-control" id="href" disabled="true" name="href" placeholder="" value="/">
+									</div>
+									<span class="help-block">相对链接地址如/index</span>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-md-3 control-label">优先级</label>
+								<div class="col-md-4">
+									<div class="input-icon right">
+										<i class="fa fa-microphone"></i>
+										<input type="text" name="pri" class="form-control" placeholder="优先级越高，菜单排列越考前" value="">
+									</div>
+								</div>
+							</div>
+								
+						</div>
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-offset-3 col-md-4">
+									<button type="button" class="btn green button-submit">Submit</button>
+									<button type="button" class="btn default" data-dismiss="modal">Cancel</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				<!-- END FORM-->
+				</div>
+			</div>
+            <!-- END VALIDATION STATES-->
+        </div>
+    </div>
+</div>
+    <!-- END PAGE CONTENT-->
+    <script type="text/javascript" src="../../assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script> 
+    <!-- END PAGE LEVEL PLUGINS -->
+     
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+     
+    <script src="../../assets/admin/pages/scripts/myform-wizard.js"></script> 
+    <!-- END PAGE LEVEL STYLES -->
+     
+    <script>
+                jQuery(document).ready(function() {   
+                   // initiate layout and plugins
+                        FormWizard.init();
+						$("#fatherid").change(function(e){
+							if ($('#fatherid option:selected').val() == '0'){
+								$("input[name='href']").attr("disabled",true);
+								$("input[name='href']").attr("value",'/');
+							}
+							else {
+								$("input[name='href']").attr("disabled",false);
+								$("input[name='href']").attr("value",'');
+							}
+
+						});
+                        $('.button-submit').click(function(e) {
+                            $.ajax({
+								type:"POST",
+								url :"/settings/menu/add/",
+								data:$("#menu_add").serialize(),
+								success: function (rsp) {
+								alert(rsp.hint);
+                                if (rsp.code == 1){
+									/*var table=$("#menu_list").DataTable({
+										retrieve: true,
+										'ajax': '/menu/reload'
+									});
+                                    table.ajax.reload(); */
+									/*window.location.reload(true);
+									$("#page_content").load("/menu/list", function() {
+										alert("456");
+									});*/
+                                }
+                                       
+							}
+                                });
+                        });
+                });
+        
+</script> 
+    <!-- END JAVASCRIPTS -->
