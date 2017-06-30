@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import datetime_safe
-from django_mongoengine import Document, EmbeddedDocument, fields
 
 # Create your models here.
 class Users(models.Model):

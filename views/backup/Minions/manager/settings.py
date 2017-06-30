@@ -44,7 +44,6 @@ INSTALLED_APPS = (
 	'django.contrib.flatpages',
     'django.contrib.staticfiles',
     'minions',
-    'django_mongoengine',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,6 +67,7 @@ TEMPLATES = [
         'DIRS': [''],
         'APP_DIRS': False,
         'OPTIONS': {
+            'debug': True,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -100,14 +100,9 @@ DB_DATABASE = config.get('db', 'database')
 
 DATABASES = {  
     'default': {  
-        'ENGINE': 'django.db.backends.dummy',  
-        'NAME': 'antix',  
-        'USER': 'antix',  
-        'PASSWORD': "1t'sp@ss",  
-        'HOST': '10.40.2.112',  
-        'PORT': '65521',  
-        'SUPPORTS_TRANSACTIONS': False,  
-    },  
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.db',
+    }
 } 
 
 

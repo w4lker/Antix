@@ -40,9 +40,13 @@ INSTALLED_APPS = [
     'base'
 ]
 
+SESSION_ENGINE = 'django_mongoengine.sessions'
+SESSION_SERIALIZER = 'django_mongoengine.sessions.BSONSerializer'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,9 +59,10 @@ ROOT_URLCONF = 'Antix.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'APP_DIRS': False,
         'OPTIONS': {
+            'debug': True,
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -70,17 +75,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Antix.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+#DATABASES = {
+    #'default': {
+        #'ENGINE': 'django_mongodb_engine',   
+        #'NAME': 'antix',                      
+        #'USER': 'antix',                      
+        #'PASSWORD': 'Test@123qwe',                  
+        #'HOST': '10.40.2.112',                      
+        #'PORT': '65521'                      
+    #}
+#}
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': {'ENGINE': 'django.db.backends.dummy'}
+}
+MONGODB_DATABASES = {
+    "default": {
+        "name": 'antix',
+        "host": '10.40.2.112',
+        "port": 65521,
+        "password": 'Test@123qwe',
+        "username": 'antix',
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
 }
 
+INSTALLED_APPS += ["django_mongoengine"]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -104,9 +126,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh_Hans'
 
 TIME_ZONE = 'UTC'
+
+DEFAULT_CHARSET = 'UTF-8'
 
 USE_I18N = True
 

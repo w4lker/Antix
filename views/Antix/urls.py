@@ -19,4 +19,7 @@ from base.views import *
 
 urlpatterns = [
     url(r'^$', login),
+    url(r'^login$',login),
+    url(r'^index$',index), 
+    url(r'^dashboard$',dashboard), 
 ]
